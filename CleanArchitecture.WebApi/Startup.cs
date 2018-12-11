@@ -1,4 +1,5 @@
 ﻿using Akka.Actor;
+using Akka.Configuration;
 using CleanArchitecture.AkkaNET.Interfaces;
 using CleanArchitecture.AkkaNET.Providers;
 using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
@@ -28,7 +29,8 @@ namespace CleanArchitecture.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // akka.net
-            var actorSystem = ActorSystem.Create("clean-arch-system");
+            var config = ConfigurationFactory.ParseString(GetHocon());
+            var actorSystem = ActorSystem.Create("clean-arch-system", config);
             services.AddSingleton(typeof(IActorRefFactory), actorSystem);
             services.AddSingleton(typeof(ICustomerActorProvider), typeof(CustomerActorProvider));
             services.AddSingleton(typeof(IEmployeeActorProvider), typeof(EmployeeActorProvider));
@@ -80,6 +82,24 @@ namespace CleanArchitecture.WebApi
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+
+        private static string GetHocon()
+        {
+            return @"akka.persistence{
+                journal {
+                  plugin = ""akka.persistence.journal.sql-server""
+                  sql-server {
+                      class = ""Akka.Persistence.SqlServer.Journal.SqlServerJournal, Akka.Persistence.SqlServer""
+                      schema-name = dbo
+                      auto-initialize = on
+                      table-name = EventJournal
+                      metadata-table-name = EventMetadata 
+                      connection-string = ""Data Source=localhost\\SQLEXPRESS;Database=CleanArchitecture_CQRS;Integrated Security=True""
+                  }
+                }
+              }
+            ";
         }
     }
 }

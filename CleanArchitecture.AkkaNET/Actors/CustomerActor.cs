@@ -1,7 +1,7 @@
 ﻿using Akka.Persistence;
+using CleanArchitecture.Domain.Entities;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
-using System;
 using static CleanArchitecture.AkkaNET.Commands.CustomerCommands;
 using static CleanArchitecture.AkkaNET.Events.CustomerEvents;
 
@@ -16,7 +16,7 @@ namespace CleanArchitecture.AkkaNET.Actors
         public CustomersActor(IDistributedCache redis)
         {
             _redis = redis;
-            PersistenceId = $"{nameof(CustomersActor)}-{Guid.NewGuid().ToString("N")}";
+            PersistenceId = nameof(CustomersActor); // $"{nameof(CustomersActor)}-{Guid.NewGuid().ToString("N")}";
             InitCommands();
             InitRecovery();
         }
@@ -29,8 +29,7 @@ namespace CleanArchitecture.AkkaNET.Actors
             Command<CreateCustomer>(cmd => {
                 var evt = new CustomerCreated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => {
-                    // todo(bwills): investigate implemenatation and make type safe
-                    _redis.SetString($"customer:{cmd.Id}", JsonConvert.SerializeObject(new {
+                    _redis.SetString($"customer:{cmd.Id}", JsonConvert.SerializeObject(new Customer {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
                     }));
@@ -41,7 +40,7 @@ namespace CleanArchitecture.AkkaNET.Actors
             Command<UpdateCustomer>(cmd => {
                 var evt = new CustomerUpdated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => {
-                    _redis.SetString($"customer:{cmd.Id}", JsonConvert.SerializeObject(new {
+                    _redis.SetString($"customer:{cmd.Id}", JsonConvert.SerializeObject(new Customer {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
                     }));
@@ -57,12 +56,18 @@ namespace CleanArchitecture.AkkaNET.Actors
         {
             Recover<CustomerCreated>(evt =>
             {
-                _redis.SetString($"customer:{evt.Id}", JsonConvert.SerializeObject(evt));
+                _redis.SetString($"customer:{evt.Id}", JsonConvert.SerializeObject(new Customer {
+                    CustomerId = evt.Id,
+                    CustomerName = $"{evt.FirstName} {evt.LastName}",
+                }));
             });
 
             Recover<CustomerUpdated>(evt =>
             {
-                _redis.SetString($"customer:{evt.Id}", JsonConvert.SerializeObject(evt));
+                _redis.SetString($"customer:{evt.Id}", JsonConvert.SerializeObject(new Customer {
+                    CustomerId = evt.Id,
+                    CustomerName = $"{evt.FirstName} {evt.LastName}",
+                }));
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Domain.Entities;
+﻿using CleanArchitecture.AkkaNET.Interfaces;
+using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomerDetail
     {
         private IDistributedCache _redis;
 
-        public GetCustomerDetailQueryHandler(IDistributedCache redis)
+        public GetCustomerDetailQueryHandler(IDistributedCache redis, ICustomerActorProvider customActorProvider)
         {
             _redis = redis;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using CleanArchitecture.AkkaNET.Interfaces;
 using CleanArchitecture.Application.Customers.Commands.CreateCustomer;
 using CleanArchitecture.Application.Customers.Commands.UpdateCustomer;
 using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
@@ -10,6 +11,13 @@ namespace CleanArchitecture.WebApi.Controllers
     [ApiController]
     public class ValuesController : BaseController
     {
+
+        /// <summary>
+        /// Constructor to build actors 
+        /// </summary>
+        /// <param name="actor"></param>
+        public ValuesController(ICustomerActorProvider actor) { }
+
         // GET api/values
         [HttpGet]
         public object Get()
