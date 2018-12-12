@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CachingFramework.Redis.Contracts;
@@ -19,7 +19,7 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomersList
         public async Task<GetCustomersListQueryViewModel> Handle(GetCustomersListQuery request, CancellationToken cancellationToken)
         {
             var customers = await _redis.Cache.GetHashedAllAsync<Customer>("customer:hash");
-            return new GetCustomersListQueryViewModel() { Customers = customers.Select(i => i.Value).ToList() };
+            return new GetCustomersListQueryViewModel() { Customers = customers.Values };
         }
     }
 }
