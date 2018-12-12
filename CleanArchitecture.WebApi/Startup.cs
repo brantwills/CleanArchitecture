@@ -31,9 +31,9 @@ namespace CleanArchitecture.WebApi
             // akka.net
             var config = ConfigurationFactory.ParseString(GetHocon());
             var actorSystem = ActorSystem.Create("clean-arch-system", config);
-            services.AddSingleton(typeof(IActorRefFactory), actorSystem);
-            services.AddSingleton(typeof(ICustomerActorProvider), typeof(CustomerActorProvider));
-            services.AddSingleton(typeof(IEmployeeActorProvider), typeof(EmployeeActorProvider));
+            services.AddSingleton<IActorRefFactory>(actorSystem);
+            services.AddSingleton<ICustomerActorProvider, CustomerActorProvider>();
+            services.AddSingleton<IEmployeeActorProvider, EmployeeActorProvider>();
 
             // mediatr
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
@@ -42,13 +42,11 @@ namespace CleanArchitecture.WebApi
             services.AddMediatR(typeof(GetCustomerDetailQueryHandler));
 
             // redis
-            /*
-            services.AddDistributedRedisCache(option =>
+            services.AddStackExchangeRedisCache(option =>
             {
-                option.Configuration = "127.0.0.1;";
+                option.Configuration = "127.0.0.1";
                 option.InstanceName = "master";
             });
-            */
 
             // setup
             services
