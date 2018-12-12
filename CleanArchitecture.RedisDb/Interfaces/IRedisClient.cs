@@ -1,0 +1,27 @@
+﻿using StackExchange.Redis;
+using System;
+using System.Collections.Generic;
+
+namespace CleanArchitecture.RedisDb.Interfaces
+{
+    public interface IRedisClient
+    {
+        bool Remove(string key);
+
+        void Remove(RedisKey[] keys);
+
+        bool Exists(string key);
+
+        void Stop();
+
+        bool Add(string key, object value, TimeSpan expiresAt);
+
+        bool Add<T>(string key, T value, TimeSpan expiresAt) where T : class;
+
+        bool Update<T>(string key, T value) where T : class;
+
+        T Get<T>(string key) where T : class;
+
+        List<T> GetList<T>(string key) where T : class;
+    }
+}
