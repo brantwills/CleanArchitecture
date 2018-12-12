@@ -1,5 +1,7 @@
 ﻿using Akka.Actor;
 using Akka.Configuration;
+using CachingFramework.Redis;
+using CachingFramework.Redis.Contracts;
 using CleanArchitecture.AkkaNET.Interfaces;
 using CleanArchitecture.AkkaNET.Providers;
 using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
@@ -28,25 +30,24 @@ namespace CleanArchitecture.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // redis
+            var context = new RedisContext();
+            services.AddSingleton<IContext>(context);
+
             // akka.net
             var config = ConfigurationFactory.ParseString(GetHocon());
             var actorSystem = ActorSystem.Create("clean-arch-system", config);
+            var customerActorProvider = new CustomerActorProvider(actorSystem, context);
+            var employeeActorProvider = new EmployeeActorProvider(actorSystem, context);
             services.AddSingleton<IActorRefFactory>(actorSystem);
-            services.AddSingleton<ICustomerActorProvider, CustomerActorProvider>();
-            services.AddSingleton<IEmployeeActorProvider, EmployeeActorProvider>();
+            services.AddSingleton<ICustomerActorProvider>(customerActorProvider);
+            services.AddSingleton<IEmployeeActorProvider>(employeeActorProvider);
 
             // mediatr
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             services.AddMediatR(typeof(GetCustomerDetailQueryHandler));
-
-            // redis
-            services.AddStackExchangeRedisCache(option =>
-            {
-                option.Configuration = "127.0.0.1";
-                option.InstanceName = "master";
-            });
 
             // setup
             services

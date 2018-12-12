@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using CleanArchitecture.AkkaNET.Interfaces;
 using CleanArchitecture.Application.Customers.Commands.CreateCustomer;
 using CleanArchitecture.Application.Customers.Commands.UpdateCustomer;
 using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
+using CleanArchitecture.Application.Customers.Queries.GetCustomersList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebApi.Controllers
@@ -11,18 +11,11 @@ namespace CleanArchitecture.WebApi.Controllers
     [ApiController]
     public class ValuesController : BaseController
     {
-
-        /// <summary>
-        /// Constructor to build actors 
-        /// </summary>
-        /// <param name="actor"></param>
-        public ValuesController(ICustomerActorProvider actor) { }
-
         // GET api/values
         [HttpGet]
-        public object Get()
+        public async Task<ActionResult> Get()
         {
-            return Ok("loaded...");
+            return Ok(await Mediator.Send(new GetCustomersListQuery()));
         }
 
         // GET api/values/5

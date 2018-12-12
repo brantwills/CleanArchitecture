@@ -1,7 +1,6 @@
 ﻿using Akka.Persistence;
+using CachingFramework.Redis.Contracts;
 using CleanArchitecture.Domain.Entities;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 using static CleanArchitecture.AkkaNET.Commands.CustomerCommands;
 using static CleanArchitecture.AkkaNET.Events.CustomerEvents;
 
@@ -9,14 +8,14 @@ namespace CleanArchitecture.AkkaNET.Actors
 {
     public class CustomersActor : ReceivePersistentActor
     {
-        private IDistributedCache _redis;
+        private IContext _redis;
 
         public override string PersistenceId { get; }
 
-        public CustomersActor(IDistributedCache redis)
+        public CustomersActor(IContext redis)
         {
             _redis = redis;
-            PersistenceId = nameof(CustomersActor); // $"{nameof(CustomersActor)}-{Guid.NewGuid().ToString("N")}";
+            PersistenceId = nameof(CustomersActor);
             InitCommands();
             InitRecovery();
         }
@@ -29,10 +28,11 @@ namespace CleanArchitecture.AkkaNET.Actors
             Command<CreateCustomer>(cmd => {
                 var evt = new CustomerCreated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => {
-                    _redis.SetString($"customer:{cmd.Id}", JsonConvert.SerializeObject(new Customer {
+                    _redis.Cache.SetHashed("customer:hash", $"customer:id:{evt.Id}", new Customer
+                    {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
-                    }));
+                    });
                     Context.System.EventStream.Publish(e);
                 });
             });
@@ -40,10 +40,11 @@ namespace CleanArchitecture.AkkaNET.Actors
             Command<UpdateCustomer>(cmd => {
                 var evt = new CustomerUpdated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => {
-                    _redis.SetString($"customer:{cmd.Id}", JsonConvert.SerializeObject(new Customer {
+                    _redis.Cache.SetHashed("customer:hash", $"customer:id:{evt.Id}", new Customer
+                    {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
-                    }));
+                    });
                     Context.System.EventStream.Publish(e);
                 });
             });
@@ -56,18 +57,20 @@ namespace CleanArchitecture.AkkaNET.Actors
         {
             Recover<CustomerCreated>(evt =>
             {
-                _redis.SetString($"customer:{evt.Id}", JsonConvert.SerializeObject(new Customer {
+                _redis.Cache.SetHashed("customer:hash", $"customer:id:{evt.Id}", new Customer
+                {
                     CustomerId = evt.Id,
                     CustomerName = $"{evt.FirstName} {evt.LastName}",
-                }));
+                });
             });
 
             Recover<CustomerUpdated>(evt =>
             {
-                _redis.SetString($"customer:{evt.Id}", JsonConvert.SerializeObject(new Customer {
+                _redis.Cache.SetHashed("customer:hash", $"customer:id:{evt.Id}", new Customer
+                {
                     CustomerId = evt.Id,
                     CustomerName = $"{evt.FirstName} {evt.LastName}",
-                }));
+                });
             });
         }
     }

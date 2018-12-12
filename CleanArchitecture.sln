@@ -27,9 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistance", "Persistance"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.MongoDb", "CleanArchitecture.MongoDb\CleanArchitecture.MongoDb.csproj", "{09D5B112-C7F7-4E6A-8347-4E90EBA4EC05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.RedisDb", "CleanArchitecture.RedisDb\CleanArchitecture.RedisDb.csproj", "{3A471FD3-4DFA-4D18-9502-17AEB53CDF0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.AkkaNET", "CleanArchitecture.AkkaNET\CleanArchitecture.AkkaNET.csproj", "{3EFE537E-D2DC-4E41-999E-F58F27206492}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.AkkaNET", "CleanArchitecture.AkkaNET\CleanArchitecture.AkkaNET.csproj", "{3EFE537E-D2DC-4E41-999E-F58F27206492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.RedisDb", "CleanArchitecture.RedisDb\CleanArchitecture.RedisDb.csproj", "{240BB471-51F1-48E2-8F81-F84CF90E43FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,14 +53,14 @@ Global
 		{09D5B112-C7F7-4E6A-8347-4E90EBA4EC05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09D5B112-C7F7-4E6A-8347-4E90EBA4EC05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09D5B112-C7F7-4E6A-8347-4E90EBA4EC05}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A471FD3-4DFA-4D18-9502-17AEB53CDF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A471FD3-4DFA-4D18-9502-17AEB53CDF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A471FD3-4DFA-4D18-9502-17AEB53CDF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A471FD3-4DFA-4D18-9502-17AEB53CDF0A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3EFE537E-D2DC-4E41-999E-F58F27206492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3EFE537E-D2DC-4E41-999E-F58F27206492}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EFE537E-D2DC-4E41-999E-F58F27206492}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EFE537E-D2DC-4E41-999E-F58F27206492}.Release|Any CPU.Build.0 = Release|Any CPU
+		{240BB471-51F1-48E2-8F81-F84CF90E43FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240BB471-51F1-48E2-8F81-F84CF90E43FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240BB471-51F1-48E2-8F81-F84CF90E43FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240BB471-51F1-48E2-8F81-F84CF90E43FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,8 +75,8 @@ Global
 		{037CE30E-784E-4824-A782-D325336CBE26} = {37B544D6-CB23-4807-8DEA-3D29DE0FEBE5}
 		{8A544F11-5121-4F8F-933B-200C32A64650} = {B940640E-02A8-4188-B683-B94BD1A745EE}
 		{09D5B112-C7F7-4E6A-8347-4E90EBA4EC05} = {8A544F11-5121-4F8F-933B-200C32A64650}
-		{3A471FD3-4DFA-4D18-9502-17AEB53CDF0A} = {8A544F11-5121-4F8F-933B-200C32A64650}
 		{3EFE537E-D2DC-4E41-999E-F58F27206492} = {8A544F11-5121-4F8F-933B-200C32A64650}
+		{240BB471-51F1-48E2-8F81-F84CF90E43FB} = {8A544F11-5121-4F8F-933B-200C32A64650}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEF2F01D-7CA6-41F5-8D58-AC811A1B3F63}
