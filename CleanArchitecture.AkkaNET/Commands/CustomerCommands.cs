@@ -35,5 +35,16 @@
                 LastName = lastname;
             }
         }
+
+        public class DeleteCustomer
+        { 
+            public int Id { get; }
+
+            public DeleteCustomer(int id)
+            {
+                Id = id;
+            }
+        }
+
     }
 }

@@ -13,5 +13,10 @@ namespace CleanArchitecture.AkkaNET.Events
         {
             public CustomerUpdated(int id, string firstname, string lastname) : base(id, firstname, lastname) { }
         }
+
+        public class CustomerDeleted : CustomerCommands.DeleteCustomer
+        {
+            public CustomerDeleted(int id) : base(id) { }
+        }
     }
 }

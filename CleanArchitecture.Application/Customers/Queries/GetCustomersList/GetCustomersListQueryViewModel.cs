@@ -5,6 +5,6 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomersList
 {
     public class GetCustomersListQueryViewModel
     {
-        public ICollection<Customer> Customers { get; set; }
+        public IDictionary<string, Customer> Customers { get; set; }
     }
 }

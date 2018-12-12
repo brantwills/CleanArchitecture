@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomersList
         public async Task<GetCustomersListQueryViewModel> Handle(GetCustomersListQuery request, CancellationToken cancellationToken)
         {
             var customers = await _redis.Cache.GetHashedAllAsync<Customer>("customer:hash");
-            return new GetCustomersListQueryViewModel() { Customers = customers.Values };
+            return new GetCustomersListQueryViewModel() { Customers = customers };
         }
     }
 }

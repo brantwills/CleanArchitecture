@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CleanArchitecture.Application.Customers.Commands.CreateCustomer;
+using CleanArchitecture.Application.Customers.Commands.DeleteCustomer;
 using CleanArchitecture.Application.Customers.Commands.UpdateCustomer;
 using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
 using CleanArchitecture.Application.Customers.Queries.GetCustomersList;
@@ -42,8 +43,9 @@ namespace CleanArchitecture.WebApi.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(int id)
         {
+            await Mediator.Send(new DeleteCustomerCommand { Id = id });
         }
     }
 }
