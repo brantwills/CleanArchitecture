@@ -1,5 +1,6 @@
 ﻿using CachingFramework.Redis.Contracts;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.RedisDb;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Customers.Commands.DeleteCustomer
@@ -18,7 +19,7 @@ namespace CleanArchitecture.Application.Customers.Commands.DeleteCustomer
 
         private bool BeExistingCustomer(int id)
         {
-            var customer = _redis.Cache.GetHashed<Customer>("customer:hash", $"customer:id:{id}");
+            var customer = _redis.Cache.GetHashed<Customer>(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(id));
             return customer != null;
         }
     }

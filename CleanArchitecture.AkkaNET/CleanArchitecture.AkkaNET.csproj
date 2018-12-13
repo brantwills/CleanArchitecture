@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CleanArchitecture.Domain\CleanArchitecture.Domain.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.RedisDb\CleanArchitecture.RedisDb.csproj" />
   </ItemGroup>
 
   <ItemGroup>

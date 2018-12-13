@@ -1,5 +1,6 @@
 ﻿using CachingFramework.Redis.Contracts;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.RedisDb;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomerDetail
 
         public async Task<Customer> Handle(GetCustomerDetailQuery request, CancellationToken cancellationToken)
         {
-            return await _redis.Cache.FetchHashedAsync<Customer>("customer:hash", $"customer:id:{request.Id}", () => null);
+            return await _redis.Cache.FetchHashedAsync<Customer>(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(request.Id), () => null);
         }
     }
 }
