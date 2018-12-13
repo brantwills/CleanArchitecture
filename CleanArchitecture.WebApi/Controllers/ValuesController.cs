@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CleanArchitecture.Application.Customers.Commands.CreateCustomer;
 using CleanArchitecture.Application.Customers.Commands.DeleteCustomer;
 using CleanArchitecture.Application.Customers.Commands.UpdateCustomer;
@@ -16,36 +17,74 @@ namespace CleanArchitecture.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            return Ok(await Mediator.Send(new GetCustomersListQuery()));
+            try
+            {
+                return Ok(await Mediator.Send(new GetCustomersListQuery()));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var customer = await Mediator.Send(new GetCustomerDetailQuery { Id = id });
-            return customer != null ? Ok(customer) : (ActionResult)BadRequest();
+            try
+            {
+                var customer = await Mediator.Send(new GetCustomerDetailQuery { Id = id });
+                return customer != null ? Ok(customer) : (ActionResult)NotFound();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // POST api/values
         [HttpPost]
-        public async void Post([FromBody] CreateCustomerCommand command)
+        public async Task<ActionResult> Post([FromBody] CreateCustomerCommand command)
         {
-            await Mediator.Send(command);
+            try
+            {
+                await Mediator.Send(command);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async void Put(int id, [FromBody] UpdateCustomerCommand command)
+        public async Task<ActionResult> Put(int id, [FromBody] UpdateCustomerCommand command)
         {
-            await Mediator.Send(command);
+            try
+            {
+                await Mediator.Send(command);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public async void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            await Mediator.Send(new DeleteCustomerCommand { Id = id });
+            try
+            {
+                await Mediator.Send(new DeleteCustomerCommand { Id = id });
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }
