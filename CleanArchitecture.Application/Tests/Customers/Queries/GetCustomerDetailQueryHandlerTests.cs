@@ -3,6 +3,7 @@ using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
 using CleanArchitecture.Domain.Entities;
 using Moq;
 using Shouldly;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,12 +23,13 @@ namespace CleanArchitecture.Application.Tests.Customers.Queries
             };
 
             var context = new Mock<IContext>();
-            context.Setup(_ => _.Cache.FetchHashedAsync<Customer>(
-                "customer:hash",
-                "customer:id:1",
-                () => null,
-                null)
-            ).ReturnsAsync(customer);
+            context.Setup(_ => _.Cache
+                .FetchHashedAsync<Customer>(
+                    "customer:hash",
+                    "customer:id:1",
+                    It.IsAny<Func<Task<Customer>>>(),
+                    null))
+                .ReturnsAsync(customer);
 
             var sut = new GetCustomerDetailQueryHandler(context.Object);
             var result = await sut.Handle(new GetCustomerDetailQuery{ Id = 1 }, CancellationToken.None);
