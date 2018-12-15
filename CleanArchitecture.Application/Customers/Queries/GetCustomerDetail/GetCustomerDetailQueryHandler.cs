@@ -1,5 +1,6 @@
 ﻿using CachingFramework.Redis.Contracts;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.Interfaces;
 using CleanArchitecture.RedisDb;
 using MediatR;
 using System.Threading;
@@ -9,16 +10,16 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomerDetail
 {
     public class GetCustomerDetailQueryHandler : IRequestHandler<GetCustomerDetailQuery, Customer>
     {
-        private IContext _redis;
+        private IReadStoreHandler _read;
 
-        public GetCustomerDetailQueryHandler(IContext redis)
+        public GetCustomerDetailQueryHandler(IReadStoreHandler read)
         {
-            _redis = redis;
+            _read = read;
         }
 
         public async Task<Customer> Handle(GetCustomerDetailQuery request, CancellationToken cancellationToken)
         {
-            return await _redis.Cache.FetchHashedAsync<Customer>(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(request.Id), () => null, null);
+            return await _read.GetById<Customer>(request.Id);
         }
     }
 }

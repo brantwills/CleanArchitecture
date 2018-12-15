@@ -1,8 +1,7 @@
 ﻿using Akka.Actor;
-using CachingFramework.Redis.Contracts;
 using CleanArchitecture.AkkaNET.Actors;
 using CleanArchitecture.AkkaNET.Interfaces;
-using Microsoft.Extensions.Caching.Distributed;
+using CleanArchitecture.Domain.Interfaces;
 
 namespace CleanArchitecture.AkkaNET.Providers
 {
@@ -10,7 +9,7 @@ namespace CleanArchitecture.AkkaNET.Providers
     {
         private IActorRef CustomersActor { get; set; }
 
-        public CustomerActorProvider(IActorRefFactory actorSystem, IContext redis)
+        public CustomerActorProvider(IActorRefFactory actorSystem, IReadStoreHandler redis)
         {
             CustomersActor = actorSystem.ActorOf(Props.Create<CustomersActor>(redis), "customers");
         }

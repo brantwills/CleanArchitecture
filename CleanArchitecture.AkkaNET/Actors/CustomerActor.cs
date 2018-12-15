@@ -1,7 +1,6 @@
 ﻿using Akka.Persistence;
-using CachingFramework.Redis.Contracts;
 using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.RedisDb;
+using CleanArchitecture.Domain.Interfaces;
 using static CleanArchitecture.AkkaNET.Commands.CustomerCommands;
 using static CleanArchitecture.AkkaNET.Events.CustomerEvents;
 
@@ -9,13 +8,13 @@ namespace CleanArchitecture.AkkaNET.Actors
 {
     public class CustomersActor : ReceivePersistentActor
     {
-        private IContext _redis;
+        private IReadStoreHandler _readStore;
 
         public override string PersistenceId { get; }
 
-        public CustomersActor(IContext redis)
+        public CustomersActor(IReadStoreHandler readStore)
         {
-            _redis = redis;
+            _readStore = readStore;
             PersistenceId = nameof(CustomersActor);
             InitCommands();
             InitRecovery();
@@ -30,11 +29,11 @@ namespace CleanArchitecture.AkkaNET.Actors
                 var evt = new CustomerCreated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => 
                 {
-                    _redis.Cache.SetHashed(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(evt.Id), new Customer
+                    _readStore.Add(new Customer
                     {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
-                    });
+                    }, evt.Id);
                     Context.System.EventStream.Publish(e);
                 });
             });
@@ -43,11 +42,11 @@ namespace CleanArchitecture.AkkaNET.Actors
                 var evt = new CustomerUpdated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => 
                 {
-                    _redis.Cache.SetHashed(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(evt.Id), new Customer
+                    _readStore.Add(new Customer
                     {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
-                    });
+                    }, evt.Id);
                     Context.System.EventStream.Publish(e);
                 });
             });
@@ -57,7 +56,7 @@ namespace CleanArchitecture.AkkaNET.Actors
                 var evt = new CustomerDeleted(cmd.Id);
                 Persist(evt, e => 
                 {
-                    _redis.Cache.RemoveHashed(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(evt.Id));
+                    _readStore.DeleteById<Customer>(evt.Id);
                     Context.System.EventStream.Publish(e); 
                 });
             });
@@ -70,25 +69,25 @@ namespace CleanArchitecture.AkkaNET.Actors
         {
             Recover<CustomerCreated>(evt =>
             {
-                _redis.Cache.SetHashed(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(evt.Id), new Customer
+                _readStore.Add(new Customer
                 {
                     CustomerId = evt.Id,
                     CustomerName = $"{evt.FirstName} {evt.LastName}",
-                });
+                }, evt.Id);
             });
 
             Recover<CustomerUpdated>(evt =>
             {
-                _redis.Cache.SetHashed(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(evt.Id), new Customer
+                _readStore.Add(new Customer
                 {
                     CustomerId = evt.Id,
                     CustomerName = $"{evt.FirstName} {evt.LastName}",
-                });
+                }, evt.Id);
             });
 
             Recover<CustomerDeleted>(evt =>
             {
-                _redis.Cache.RemoveHashed(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(evt.Id));
+                _readStore.DeleteById<Customer>(evt.Id);
             });
         }
     }

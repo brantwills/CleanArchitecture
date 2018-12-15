@@ -1,15 +1,14 @@
-﻿using CachingFramework.Redis.Contracts;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.RedisDb;
+﻿using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.Interfaces;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
 {
     public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCommand>
     {
-        public IContext _redis;
+        public  IReadStoreHandler _redis;
 
-        public UpdateCustomerCommandValidator(IContext redis)
+        public UpdateCustomerCommandValidator(IReadStoreHandler redis)
         {
             _redis = redis;
 
@@ -19,7 +18,7 @@ namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
 
         private bool BeExistingCustomer(int id)
         {
-            var customer = _redis.Cache.GetHashed<Customer>(RedisLookup.Customer.GetHashKey(), RedisLookup.Customer.GetHashField(id));
+            var customer = _redis.GetById<Customer>(id);
             return customer != null;
         }
     }

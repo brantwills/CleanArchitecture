@@ -6,6 +6,8 @@ using CleanArchitecture.AkkaNET.Interfaces;
 using CleanArchitecture.AkkaNET.Providers;
 using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
 using CleanArchitecture.Application.Infrastructure;
+using CleanArchitecture.Domain.Interfaces;
+using CleanArchitecture.RedisDb;
 using FluentValidation.AspNetCore;
 using MediatR;
 using MediatR.Pipeline;
@@ -31,14 +33,14 @@ namespace CleanArchitecture.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // redis
-            var context = new RedisContext();
-            services.AddSingleton<IContext>(context);
+            var readStore = new RedisLookup(new RedisContext());
+            services.AddSingleton<IReadStoreHandler>(readStore);
 
             // akka.net
             var config = ConfigurationFactory.ParseString(GetHocon());
             var actorSystem = ActorSystem.Create("clean-arch-system", config);
-            var customerActorProvider = new CustomerActorProvider(actorSystem, context);
-            var employeeActorProvider = new EmployeeActorProvider(actorSystem, context);
+            var customerActorProvider = new CustomerActorProvider(actorSystem, readStore);
+            var employeeActorProvider = new EmployeeActorProvider(actorSystem, readStore);
             services.AddSingleton<IActorRefFactory>(actorSystem);
             services.AddSingleton<ICustomerActorProvider>(customerActorProvider);
             services.AddSingleton<IEmployeeActorProvider>(employeeActorProvider);
