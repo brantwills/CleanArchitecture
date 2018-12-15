@@ -4,7 +4,8 @@ using System.Text;
 
 namespace CleanArchitecture.Application.Tests.Customers.Queries
 {
-    class GetCustomerDetailQueryValidatorTests
+    public class GetCustomerDetailQueryValidatorTests
     {
+        // todo(bwills): remember do not test validator but do lock down logic tests
     }
 }
