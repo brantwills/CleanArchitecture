@@ -1,19 +1,17 @@
-﻿using CachingFramework.Redis.Contracts;
-using CleanArchitecture.Domain.Entities;
+﻿using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces;
-using CleanArchitecture.RedisDb;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer
 {
     public class CreateCustomerCommandValidator  : AbstractValidator<CreateCustomerCommand>
     {
-        private IReadStoreHandler _redis;
+        private IReadStoreHandler _readStore;
 
 
-        public CreateCustomerCommandValidator(IReadStoreHandler redis)
+        public CreateCustomerCommandValidator(IReadStoreHandler readStore)
         {
-            _redis = redis;
+            _readStore = readStore;
 
             RuleFor(v => v.FirstName).NotEmpty().WithMessage("First name is required");
             RuleFor(v => v.LastName).NotEmpty().WithMessage("Last name is required");
@@ -23,7 +21,7 @@ namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer
 
         private bool NotBeExistingCustomer(int id)
         {
-            var customer = _redis.GetById<Customer>(id);
+            var customer = _readStore.GetById<Customer>(id);
             return customer == null;
         }
     }

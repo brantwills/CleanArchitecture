@@ -1,11 +1,9 @@
-﻿using CachingFramework.Redis.Contracts;
-using CleanArchitecture.Application.Customers.Queries.GetCustomersList;
+﻿using CleanArchitecture.Application.Customers.Queries.GetCustomersList;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces;
 using Moq;
 using Shouldly;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;

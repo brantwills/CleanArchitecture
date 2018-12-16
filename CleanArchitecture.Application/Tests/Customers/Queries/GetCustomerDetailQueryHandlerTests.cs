@@ -1,5 +1,4 @@
-﻿using CachingFramework.Redis.Contracts;
-using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
+﻿using CleanArchitecture.Application.Customers.Queries.GetCustomerDetail;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces;
 using Moq;

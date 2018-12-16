@@ -6,11 +6,11 @@ namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
 {
     public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCommand>
     {
-        public  IReadStoreHandler _redis;
+        public  IReadStoreHandler _readStore;
 
-        public UpdateCustomerCommandValidator(IReadStoreHandler redis)
+        public UpdateCustomerCommandValidator(IReadStoreHandler readStore)
         {
-            _redis = redis;
+            _readStore = readStore;
 
             RuleFor(v => v.Id).GreaterThan(0).WithMessage("Id must be greater than zero");
             RuleFor(v => v.Id).Must(BeExistingCustomer).WithMessage("Customer must exist to update");
@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
 
         private bool BeExistingCustomer(int id)
         {
-            var customer = _redis.GetById<Customer>(id);
+            var customer = _readStore.GetById<Customer>(id);
             return customer != null;
         }
     }

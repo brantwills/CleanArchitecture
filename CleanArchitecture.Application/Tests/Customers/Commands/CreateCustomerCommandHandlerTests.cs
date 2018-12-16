@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using Akka.Actor;
 using Akka.TestKit.Xunit2;
-using CachingFramework.Redis.Contracts;
 using CleanArchitecture.AkkaNET.Actors;
 using CleanArchitecture.AkkaNET.Interfaces;
 using CleanArchitecture.Application.Customers.Commands.CreateCustomer;

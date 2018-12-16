@@ -9,9 +9,9 @@ namespace CleanArchitecture.AkkaNET.Providers
     {
         private IActorRef CustomersActor { get; set; }
 
-        public CustomerActorProvider(IActorRefFactory actorSystem, IReadStoreHandler redis)
+        public CustomerActorProvider(IActorRefFactory actorSystem, IReadStoreHandler readStore)
         {
-            CustomersActor = actorSystem.ActorOf(Props.Create<CustomersActor>(redis), "customers");
+            CustomersActor = actorSystem.ActorOf(Props.Create<CustomersActor>(readStore), "customers");
         }
 
         public IActorRef Get()
