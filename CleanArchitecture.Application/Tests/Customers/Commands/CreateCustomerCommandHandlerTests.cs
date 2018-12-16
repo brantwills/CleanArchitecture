@@ -5,6 +5,7 @@ using CachingFramework.Redis.Contracts;
 using CleanArchitecture.AkkaNET.Actors;
 using CleanArchitecture.AkkaNET.Interfaces;
 using CleanArchitecture.Application.Customers.Commands.CreateCustomer;
+using CleanArchitecture.Domain.Interfaces;
 using Moq;
 using Shouldly;
 using Xunit;
@@ -18,7 +19,7 @@ namespace CleanArchitecture.Application.Tests.Customers.Commands
         public async void CreateCustomer()
         {
             var probe = CreateTestProbe();
-            var context = new Mock<IContext>();
+            var context = new Mock<IReadStoreHandler>();
             var provider = new Mock<ICustomerActorProvider>();
             var actor = Sys.ActorOf(Props.Create<CustomersActor>(context), "customers");
             var customerCommand = new CreateCustomerCommand { Id = 1, FirstName = "first", LastName = "last" };

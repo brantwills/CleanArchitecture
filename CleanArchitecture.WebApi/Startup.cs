@@ -33,7 +33,7 @@ namespace CleanArchitecture.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // redis
-            var readStore = new RedisLookup(new RedisContext());
+            var readStore = new RedisReadStore(new RedisContext());
             services.AddSingleton<IReadStoreHandler>(readStore);
 
             // akka.net
