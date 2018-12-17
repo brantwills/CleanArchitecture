@@ -14,7 +14,7 @@ namespace CleanArchitecture.Application.Tests.Customers.Queries
     public class GetCustomerDetailQueryHandlerTests
     {
         [Fact]
-        public async Task GetCustomerDetail()
+        public async Task ItShouldGetCustomerDetail()
         {
             var customer = new Customer
             {

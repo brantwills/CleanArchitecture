@@ -15,7 +15,7 @@ namespace CleanArchitecture.Application.Tests.Customers.Commands
     public class CreateCustomerCommandHandlerTests : TestKit
     {
         [Fact]
-        public async void CreateCustomer()
+        public async void ItShouldCreateCustomer()
         {
             var probe = CreateTestProbe();
             var context = new Mock<ICustomerRepository>();

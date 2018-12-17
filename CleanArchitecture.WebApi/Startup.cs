@@ -65,7 +65,7 @@ namespace CleanArchitecture.WebApi
             // setup
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<GetCustomerDetailQueryValidator>());
 
             // swagger

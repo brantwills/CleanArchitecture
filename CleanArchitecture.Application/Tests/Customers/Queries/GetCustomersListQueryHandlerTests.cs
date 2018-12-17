@@ -13,7 +13,7 @@ namespace CleanArchitecture.Application.Tests.Customers.Queries
     public class GetCustomersListQueryHandlerTests
     {
         [Fact]
-        public async Task GetCustomerDetail()
+        public async Task ItShouldGetCustomerList()
         {
             var customers = new List<Customer> {
                 new Customer { CustomerId = 1, CustomerName = "first last" },
