@@ -8,16 +8,17 @@ namespace CleanArchitecture.Application.Customers.Queries.GetCustomerDetail
 {
     public class GetCustomerDetailQueryHandler : IRequestHandler<GetCustomerDetailQuery, Customer>
     {
-        private IReadStoreHandler _readStore;
+        private ICustomerRepository _readStore;
 
-        public GetCustomerDetailQueryHandler(IReadStoreHandler readStore)
+        public GetCustomerDetailQueryHandler(ICustomerRepository readStore)
         {
             _readStore = readStore;
         }
 
         public async Task<Customer> Handle(GetCustomerDetailQuery request, CancellationToken cancellationToken)
         {
-            return await _readStore.GetById<Customer>(request.Id);
+            return await _readStore.GetCustomerById(request.Id);
+
         }
     }
 }

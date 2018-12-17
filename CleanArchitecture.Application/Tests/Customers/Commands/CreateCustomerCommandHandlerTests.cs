@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Tests.Customers.Commands
         public async void CreateCustomer()
         {
             var probe = CreateTestProbe();
-            var context = new Mock<IReadStoreHandler>();
+            var context = new Mock<ICustomerRepository>();
             var provider = new Mock<ICustomerActorProvider>();
             var actor = Sys.ActorOf(Props.Create<CustomersActor>(context), "customers");
             var customerCommand = new CreateCustomerCommand { Id = 1, FirstName = "first", LastName = "last" };

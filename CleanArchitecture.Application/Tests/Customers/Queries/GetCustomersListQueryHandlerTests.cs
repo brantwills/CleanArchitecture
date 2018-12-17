@@ -20,8 +20,8 @@ namespace CleanArchitecture.Application.Tests.Customers.Queries
                 new Customer { CustomerId = 2, CustomerName = "test test" },
             };
 
-            var context = new Mock<IReadStoreHandler>();
-            context.Setup(_ => _.Get<Customer>()).ReturnsAsync(customers);
+            var context = new Mock<ICustomerRepository>();
+            context.Setup(_ => _.GetCustomers()).ReturnsAsync(customers);
 
             var sut = new GetCustomersListQueryHandler(context.Object);
             var result = await sut.Handle(new GetCustomersListQuery(), CancellationToken.None);

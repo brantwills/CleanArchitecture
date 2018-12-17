@@ -8,11 +8,11 @@ namespace CleanArchitecture.AkkaNET.Actors
 {
     public class CustomersActor : ReceivePersistentActor
     {
-        private IReadStoreHandler _readStore;
+        private ICustomerRepository _readStore;
 
         public override string PersistenceId { get; }
 
-        public CustomersActor(IReadStoreHandler readStore)
+        public CustomersActor(ICustomerRepository readStore)
         {
             _readStore = readStore;
             PersistenceId = nameof(CustomersActor);
@@ -29,11 +29,11 @@ namespace CleanArchitecture.AkkaNET.Actors
                 var evt = new CustomerCreated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => 
                 {
-                    _readStore.Add(new Customer
+                    _readStore.CreateCustomer(new Customer
                     {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
-                    }, evt.Id);
+                    });
                     Context.System.EventStream.Publish(e);
                 });
             });
@@ -42,11 +42,11 @@ namespace CleanArchitecture.AkkaNET.Actors
                 var evt = new CustomerUpdated(cmd.Id, cmd.FirstName, cmd.LastName);
                 Persist(evt, e => 
                 {
-                    _readStore.Add(new Customer
+                    _readStore.UpdateCustomer(new Customer
                     {
                         CustomerId = evt.Id,
                         CustomerName = $"{evt.FirstName} {evt.LastName}",
-                    }, evt.Id);
+                    });
                     Context.System.EventStream.Publish(e);
                 });
             });
@@ -56,7 +56,7 @@ namespace CleanArchitecture.AkkaNET.Actors
                 var evt = new CustomerDeleted(cmd.Id);
                 Persist(evt, e => 
                 {
-                    _readStore.DeleteById<Customer>(evt.Id);
+                    _readStore.DeleteCustomerById(evt.Id);
                     Context.System.EventStream.Publish(e); 
                 });
             });
@@ -69,25 +69,25 @@ namespace CleanArchitecture.AkkaNET.Actors
         {
             Recover<CustomerCreated>(evt =>
             {
-                _readStore.Add(new Customer
+                _readStore.CreateCustomer(new Customer
                 {
                     CustomerId = evt.Id,
                     CustomerName = $"{evt.FirstName} {evt.LastName}",
-                }, evt.Id);
+                });
             });
 
             Recover<CustomerUpdated>(evt =>
             {
-                _readStore.Add(new Customer
+                _readStore.UpdateCustomer(new Customer
                 {
                     CustomerId = evt.Id,
                     CustomerName = $"{evt.FirstName} {evt.LastName}",
-                }, evt.Id);
+                });
             });
 
             Recover<CustomerDeleted>(evt =>
             {
-                _readStore.DeleteById<Customer>(evt.Id);
+                _readStore.DeleteCustomerById(evt.Id);
             });
         }
     }

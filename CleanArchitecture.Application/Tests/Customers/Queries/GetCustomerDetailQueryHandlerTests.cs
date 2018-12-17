@@ -22,8 +22,8 @@ namespace CleanArchitecture.Application.Tests.Customers.Queries
                 CustomerName = "first last"
             };
 
-            var context = new Mock<IReadStoreHandler>();
-            context.Setup(_ => _.GetById<Customer>(It.IsAny<int>())).ReturnsAsync(customer);
+            var context = new Mock<ICustomerRepository>();
+            context.Setup(_ => _.GetCustomerById(It.IsAny<int>())).ReturnsAsync(customer);
 
             var sut = new GetCustomerDetailQueryHandler(context.Object);
             var result = await sut.Handle(new GetCustomerDetailQuery{ Id = 1 }, CancellationToken.None);

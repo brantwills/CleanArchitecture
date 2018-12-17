@@ -6,9 +6,9 @@ namespace CleanArchitecture.Application.Customers.Commands.DeleteCustomer
 {
     public class DeleteCustomerCommandValidator : AbstractValidator<DeleteCustomerCommand>
     {
-        public IReadStoreHandler _readStore;
+        public ICustomerRepository _readStore;
 
-        public DeleteCustomerCommandValidator(IReadStoreHandler readStore)
+        public DeleteCustomerCommandValidator(ICustomerRepository readStore)
         {
             _readStore = readStore;
 
@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Customers.Commands.DeleteCustomer
 
         private bool BeExistingCustomer(int id)
         {
-            var customer = _readStore.GetById<Customer>(id);
+            var customer = _readStore.GetCustomerById(id);
             return customer != null;
         }
     }

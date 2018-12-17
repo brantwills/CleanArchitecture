@@ -25,6 +25,8 @@
   <ItemGroup>
     <ProjectReference Include="..\CleanArchitecture.AkkaNET\CleanArchitecture.AkkaNET.csproj" />
     <ProjectReference Include="..\CleanArchitecture.Application\CleanArchitecture.Application.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.MongoDb\CleanArchitecture.MongoDb.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.RedisDb\CleanArchitecture.RedisDb.csproj" />
   </ItemGroup>
 
 </Project>

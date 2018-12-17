@@ -9,9 +9,9 @@ namespace CleanArchitecture.AkkaNET.Providers
     {
         private IActorRef EmployeeActor { get; set; }
 
-        public EmployeeActorProvider(IActorRefFactory actorSystem, IReadStoreHandler readStore)
+        public EmployeeActorProvider(IActorRefFactory actorSystem, ICustomerRepository repo)
         {
-            EmployeeActor = actorSystem.ActorOf(Props.Create<CustomersActor>(readStore), "employees");
+            EmployeeActor = actorSystem.ActorOf(Props.Create<CustomersActor>(repo), "employees");
         }
 
         public IActorRef Get()

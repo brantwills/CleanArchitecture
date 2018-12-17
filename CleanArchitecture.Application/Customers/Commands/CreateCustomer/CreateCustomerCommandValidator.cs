@@ -6,10 +6,10 @@ namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer
 {
     public class CreateCustomerCommandValidator  : AbstractValidator<CreateCustomerCommand>
     {
-        private IReadStoreHandler _readStore;
+        private ICustomerRepository _readStore;
 
 
-        public CreateCustomerCommandValidator(IReadStoreHandler readStore)
+        public CreateCustomerCommandValidator(ICustomerRepository readStore)
         {
             _readStore = readStore;
 
@@ -21,7 +21,7 @@ namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer
 
         private bool NotBeExistingCustomer(int id)
         {
-            var customer = _readStore.GetById<Customer>(id);
+            var customer = _readStore.GetCustomerById(id);
             return customer == null;
         }
     }

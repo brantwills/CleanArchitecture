@@ -6,9 +6,9 @@ namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
 {
     public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCommand>
     {
-        public  IReadStoreHandler _readStore;
+        public  ICustomerRepository _readStore;
 
-        public UpdateCustomerCommandValidator(IReadStoreHandler readStore)
+        public UpdateCustomerCommandValidator(ICustomerRepository readStore)
         {
             _readStore = readStore;
 
@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
 
         private bool BeExistingCustomer(int id)
         {
-            var customer = _readStore.GetById<Customer>(id);
+            var customer = _readStore.GetCustomerById(id);
             return customer != null;
         }
     }
