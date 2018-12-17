@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Customers.Queries.GetCustomersList
 {
-    class GetCustomersListQueryHandler : IRequestHandler<GetCustomersListQuery, GetCustomersListQueryViewModel>
+    public class GetCustomersListQueryHandler : IRequestHandler<GetCustomersListQuery, GetCustomersListQueryViewModel>
     {
         private ICustomerRepository  _readStore;
 
