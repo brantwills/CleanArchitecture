@@ -70,9 +70,9 @@ namespace CleanArchitecture.RedisDb.Tests
                 "customer:hash",
                 "customer:id:1",
                 It.IsAny<Customer>(),
-                null,
-                null,
-                When.Always)
+                It.IsAny<string[]>(),
+                It.IsAny<TimeSpan>(),
+                It.IsAny<When>())
             );
 
             var sut = new CustomerRepository(context.Object);
