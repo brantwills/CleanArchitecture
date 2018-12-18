@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.AkkaNET",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.RedisDb", "CleanArchitecture.RedisDb\CleanArchitecture.RedisDb.csproj", "{240BB471-51F1-48E2-8F81-F84CF90E43FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Application.Tests", "CleanArchitecture.Application.Tests\CleanArchitecture.Application.Tests.csproj", "{481681E0-03AC-4BEC-95B5-BA39D864F4B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Application.Tests", "CleanArchitecture.Application.Tests\CleanArchitecture.Application.Tests.csproj", "{481681E0-03AC-4BEC-95B5-BA39D864F4B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.RedisDb.Tests", "CleanArchitecture.RedisDb.Tests\CleanArchitecture.RedisDb.Tests.csproj", "{5BC1AA03-E173-48A3-A83D-EB7EACFBBE34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.RedisDb.Tests", "CleanArchitecture.RedisDb.Tests\CleanArchitecture.RedisDb.Tests.csproj", "{5BC1AA03-E173-48A3-A83D-EB7EACFBBE34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
