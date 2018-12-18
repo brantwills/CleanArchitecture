@@ -4,7 +4,7 @@ Based on the amazing structure of [Clean Architecture](https://github.com/JasonG
 
 This example includes Event Sourcing using Akka.NET
 
-This example includes Redis as the read store
+This example includes Redis and MongoDB as read stores
 
 ## Why is this a thing?
 
@@ -20,10 +20,12 @@ It is very much a work in progress
 
 I am interested in expanding on this to learn
 
-## Can I contribute to this thing?
+## Can I contribute / copy this thing?
 
 Of course!
 
 This is just a series of Work in Progress patterns
 
 All comments and critique are more than welcomed!
+
+MIT licensed (stars are plenty enough support)
