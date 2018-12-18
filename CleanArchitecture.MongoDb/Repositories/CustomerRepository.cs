@@ -1,7 +1,6 @@
 ﻿using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Interfaces;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,37 +8,40 @@ namespace CleanArchitecture.MongoDb.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private IMongoDatabase _db;
+        private IMongoCollection<Customer> customerCollection;
+
+        private string GetCustomerCollectionName() => "customers";
 
         public CustomerRepository(IMongoDatabase db)
         {
-            _db = db;
+            customerCollection = db.GetCollection<Customer>(GetCustomerCollectionName());
         }
 
-        public void CreateCustomer(Customer customer)
+        public async void CreateCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            await customerCollection.InsertOneAsync(customer);
         }
 
-        public void DeleteCustomerById(int id)
+        public async void DeleteCustomerById(int id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq(_ => _.CustomerId, id);
+            await customerCollection.DeleteOneAsync(filter);
         }
 
-        public Task<Customer> GetCustomerById(int id)
+        public async Task<Customer> GetCustomerById(int id)
         {
-            throw new NotImplementedException();
+            return await customerCollection.Find(_ => _.CustomerId == id).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Customer>> GetCustomers()
         {
-            var collection = _db.GetCollection<Customer>("customers");
-            return await collection.Find(_ => true).ToListAsync();
+            return await customerCollection.Find(_ => true).ToListAsync();
         }
 
-        public void UpdateCustomer(Customer customer)
+        public async void UpdateCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Customer>.Filter.Eq(_ => _.CustomerId, customer.CustomerId);
+            await customerCollection.ReplaceOneAsync(filter, customer);
         }
     }
 }
