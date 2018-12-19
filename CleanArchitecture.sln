@@ -33,7 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Applicati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.RedisDb.Tests", "CleanArchitecture.RedisDb.Tests\CleanArchitecture.RedisDb.Tests.csproj", "{5BC1AA03-E173-48A3-A83D-EB7EACFBBE34}"
 EndProject
+<<<<<<< Updated upstream
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.MongoDb.Tests", "CleanArchitecture.MongoDb.Tests\CleanArchitecture.MongoDb.Tests.csproj", "{4B99A69E-308A-4251-89F9-D71C6C223223}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.AkkaNET.Tests", "CleanArchitecture.AkkaNET.Tests\CleanArchitecture.AkkaNET.Tests.csproj", "{520F6C32-88BB-4351-9F16-EC83451F6101}"
+>>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,10 +77,17 @@ Global
 		{5BC1AA03-E173-48A3-A83D-EB7EACFBBE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BC1AA03-E173-48A3-A83D-EB7EACFBBE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BC1AA03-E173-48A3-A83D-EB7EACFBBE34}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< Updated upstream
 		{4B99A69E-308A-4251-89F9-D71C6C223223}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B99A69E-308A-4251-89F9-D71C6C223223}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B99A69E-308A-4251-89F9-D71C6C223223}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B99A69E-308A-4251-89F9-D71C6C223223}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{520F6C32-88BB-4351-9F16-EC83451F6101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{520F6C32-88BB-4351-9F16-EC83451F6101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{520F6C32-88BB-4351-9F16-EC83451F6101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{520F6C32-88BB-4351-9F16-EC83451F6101}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,7 +106,11 @@ Global
 		{240BB471-51F1-48E2-8F81-F84CF90E43FB} = {8A544F11-5121-4F8F-933B-200C32A64650}
 		{481681E0-03AC-4BEC-95B5-BA39D864F4B8} = {37B544D6-CB23-4807-8DEA-3D29DE0FEBE5}
 		{5BC1AA03-E173-48A3-A83D-EB7EACFBBE34} = {8A544F11-5121-4F8F-933B-200C32A64650}
+<<<<<<< Updated upstream
 		{4B99A69E-308A-4251-89F9-D71C6C223223} = {8A544F11-5121-4F8F-933B-200C32A64650}
+=======
+		{520F6C32-88BB-4351-9F16-EC83451F6101} = {8A544F11-5121-4F8F-933B-200C32A64650}
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEF2F01D-7CA6-41F5-8D58-AC811A1B3F63}
