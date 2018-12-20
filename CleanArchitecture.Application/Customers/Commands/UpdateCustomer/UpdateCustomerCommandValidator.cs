@@ -1,6 +1,7 @@
-﻿using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.Interfaces;
+﻿using CleanArchitecture.Domain.Interfaces;
 using FluentValidation;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
 {
@@ -13,12 +14,12 @@ namespace CleanArchitecture.Application.Customers.Commands.UpdateCustomer
             _readStore = readStore;
 
             RuleFor(v => v.Id).GreaterThan(0).WithMessage("Id must be greater than zero");
-            RuleFor(v => v.Id).Must(BeExistingCustomer).WithMessage("Customer must exist to update");
+            RuleFor(v => v.Id).MustAsync(BeExistingCustomer).WithMessage("Customer must exist to update");
         }
 
-        private bool BeExistingCustomer(int id)
+        private async Task<bool> BeExistingCustomer(int id, CancellationToken token)
         {
-            var customer = _readStore.GetCustomerById(id);
+            var customer = await _readStore.GetCustomerById(id);
             return customer != null;
         }
     }

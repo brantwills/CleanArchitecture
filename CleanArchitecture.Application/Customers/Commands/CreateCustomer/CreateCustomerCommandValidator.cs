@@ -1,5 +1,7 @@
 ﻿using CleanArchitecture.Domain.Interfaces;
 using FluentValidation;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer
 {
@@ -15,12 +17,12 @@ namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer
             RuleFor(v => v.FirstName).NotEmpty().WithMessage("First name is required");
             RuleFor(v => v.LastName).NotEmpty().WithMessage("Last name is required");
             RuleFor(v => v.Id).GreaterThan(0).WithMessage("ID must be greater than zero");
-            RuleFor(v => v.Id).Must(NotBeExistingCustomer).WithMessage("Customer already exists");
+            RuleFor(v => v.Id).MustAsync(NotBeExistingCustomer).WithMessage("Customer already exists");
         }
 
-        private bool NotBeExistingCustomer(int id)
+        private async Task<bool> NotBeExistingCustomer(int id, CancellationToken token)
         {
-            var customer = _readStore.GetCustomerById(id);
+            var customer = await _readStore.GetCustomerById(id);
             return customer == null;
         }
     }
