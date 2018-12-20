@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.Interfaces;
+﻿using CleanArchitecture.Domain.Interfaces;
 using FluentValidation;
 
 namespace CleanArchitecture.Application.Customers.Commands.CreateCustomer
