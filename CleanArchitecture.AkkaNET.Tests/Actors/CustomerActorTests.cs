@@ -9,7 +9,6 @@ using Xunit;
 
 namespace CleanArchitecture.AkkaNET.Tests.Actors
 {
-
     public class CustomerActorTests : TestKit
     {
         [Fact]
