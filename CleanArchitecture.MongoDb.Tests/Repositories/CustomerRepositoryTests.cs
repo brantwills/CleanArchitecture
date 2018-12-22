@@ -14,7 +14,7 @@ namespace CleanArchitecture.MongoDb.Tests.Repositories
     public class CustomerRepositoryTests
     {
         [Fact]
-        public async void ItShouldGetCustomerById()
+        public void ItShouldGetCustomerById()
         {
             var customer = new Customer
             {
