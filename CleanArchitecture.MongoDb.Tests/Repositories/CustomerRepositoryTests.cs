@@ -13,8 +13,9 @@ namespace CleanArchitecture.MongoDb.Tests.Repositories
     [Collection("RepositoryCollection")]
     public class CustomerRepositoryTests
     {
+        /*
         [Fact]
-        public void ItShouldGetCustomerById()
+        public async void ItShouldGetCustomerById()
         {
             var customer = new Customer
             {
@@ -26,7 +27,6 @@ namespace CleanArchitecture.MongoDb.Tests.Repositories
             var collection = new Mock<IMongoCollection<Customer>>();
             var findFluent = new Mock<IFindFluent<Customer, Customer>>();
 
-            /*
             collection.Setup(_ => _.Find(It.IsAny<FilterDefinition<Customer>>(), null)).Returns(findFluent.Object);
             context.Setup(_ => _.GetCollection<Customer>("customers", null)).Returns(collection.Object);
 
@@ -35,7 +35,7 @@ namespace CleanArchitecture.MongoDb.Tests.Repositories
 
             result.ShouldBeOfType<Customer>();
             result.ShouldBe(customer);
-            */
         }
+        */
     }
 }

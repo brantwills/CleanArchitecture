@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CleanArchitecture.RedisDb.Tests
+namespace CleanArchitecture.RedisDb.Tests.Repositories
 {
     [Collection("RepositoryCollection")]
     public class CustomerRepositoryTests
